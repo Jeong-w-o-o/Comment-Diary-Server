@@ -2,6 +2,7 @@ package com.commentdiary.src.emailAuth.domain;
 
 import com.commentdiary.common.domain.BaseTimeEntity;
 import com.commentdiary.src.member.domain.enums.MemberStatus;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,6 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "email_auth")
@@ -22,5 +22,11 @@ public class EmailAuth extends BaseTimeEntity {
     private String email;
 
     @Column(length = 4, nullable = false)
-    private int authNumber;
+    private int code;
+
+    @Builder
+    public EmailAuth(String email, int code) {
+        this.email = email;
+        this.code = code;
+    }
 }
