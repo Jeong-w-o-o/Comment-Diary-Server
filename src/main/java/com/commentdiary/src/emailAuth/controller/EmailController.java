@@ -1,6 +1,7 @@
 package com.commentdiary.src.emailAuth.controller;
 
 import com.commentdiary.common.response.CommonResponse;
+import com.commentdiary.src.emailAuth.dto.ConfirmCodeResquest;
 import com.commentdiary.src.emailAuth.dto.EmailAddrRequest;
 import com.commentdiary.src.emailAuth.dto.EmailSendDto;
 import com.commentdiary.src.emailAuth.service.EmailService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.commentdiary.common.response.CommonResponseStatus.FAIL;
 import static com.commentdiary.common.response.CommonResponseStatus.SUCCESS;
 
 @RestController
@@ -24,4 +26,17 @@ public class EmailController {
         emailService.sendEmail(new EmailSendDto(emailAddrRequest.getEmail(),"회원가입 인증 메일", ""));
         return new CommonResponse<>(SUCCESS);
     }
+
+    @PostMapping("/confirm")
+    public CommonResponse<Void> confirmCode(@RequestBody ConfirmCodeResquest confirmCodeResquest) {
+        if (emailService.confirmCode(confirmCodeResquest)) {
+            return new CommonResponse<>(SUCCESS);
+        }
+        else
+            return new CommonResponse<>(FAIL);
+    }
+
+
+
+
 }

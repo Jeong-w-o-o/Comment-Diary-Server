@@ -1,6 +1,7 @@
 package com.commentdiary.src.emailAuth.service;
 
 import com.commentdiary.src.emailAuth.domain.EmailAuth;
+import com.commentdiary.src.emailAuth.dto.ConfirmCodeResquest;
 import com.commentdiary.src.emailAuth.dto.EmailSendDto;
 import com.commentdiary.src.emailAuth.repository.EmailAuthRepository;
 import lombok.RequiredArgsConstructor;
@@ -56,4 +57,9 @@ public class EmailService {
         int code = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);
         return code;
     }
+
+    public boolean confirmCode(ConfirmCodeResquest confirmCodeResquest) {
+        return emailAuthRepository.existsByEmailAndCode(confirmCodeResquest.getEmail(), confirmCodeResquest.getCode());
+    }
+
 }
